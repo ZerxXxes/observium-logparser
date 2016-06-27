@@ -16,7 +16,6 @@ parser.add_argument('topnumber', metavar='N', type=int, nargs='?', default=10,
 args = parser.parse_args()
 if args.logfile:
         logfile = args.logfile
-print logfile
 topnumber = args.topnumber
 
 buf = collections.deque((), 4)
