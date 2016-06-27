@@ -5,13 +5,7 @@ import re
 logfile = "/opt/observium/logs/discovery_log"
 topnumber = 10
 def strip_ansi_codes(s):
-    """
-    >>> import blessings
-    >>> term = blessings.Terminal()
-    >>> foo = 'hidden'+term.clear_bol+'foo'+term.color(5)+'bar'+term.color(255)+'baz'
-    >>> repr(strip_ansi_codes(foo))
-    u'hiddenfoobarbaz'
-    """
+
     return re.sub(r'\x1b\[([0-9,A-Z]{1,2}(;[0-9]{1,2})?(;[0-9]{3})?)?[m|K]?', '', s)
 
 parser = argparse.ArgumentParser(description='Process Observium logfile and print the slowest SNMP-commands')
@@ -21,7 +15,7 @@ parser.add_argument('topnumber', metavar='N', type=int, nargs='?', default=10,
                     help='show top n commands (default: 10)')
 args = parser.parse_args()
 if args.logfile:
-	logfile = args.logfile
+        logfile = args.logfile
 print logfile
 topnumber = args.topnumber
 
@@ -36,8 +30,6 @@ with open(logfile) as log:
             runtimeresult = re.search(r'RUNTIME\[(.*?)s', line)
             command = commandresult.group(1)
             runtime = runtimeresult.group(1)
-            #print "SNMP Command: %s" % command
-            #print "SNMP Runtime: %s" % runtime
             runtime_stripped = strip_ansi_codes(runtime)
             commandlist.append((float(runtime_stripped), command))
             buf.clear()
